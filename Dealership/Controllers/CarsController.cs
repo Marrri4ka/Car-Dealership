@@ -26,5 +26,27 @@ namespace Dealership.Controllers
       return RedirectToAction("CarsIndex");
     }
 
+    [HttpGet ("/cars/checkprice")]
+    public ActionResult PriceForm()
+    {
+    return View();
+    }
+
+    [HttpPost ("/cars/showmatchedcars")]
+    public ActionResult ShowCars(int Price)
+    {
+      List<Car> allCars= Car.GetAll();
+      List<Car> newList = new List<Car>();
+      foreach (Car car in allCars)
+      {
+        if(Price > @car.GetPrice())
+        {
+          newList.Add(car);
+        }
+      }
+
+    return View("CarsIndex",newList);
+    }
+
   }
 }
